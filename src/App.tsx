@@ -1,13 +1,14 @@
 import { useState } from "react";
 import ProductCard from "./components/ProductCard";
-import { productList } from "./components/data";
+import { formInputsList, productList } from "./components/data";
 import Modal from "./components/ui/Dialog";
 import Buttons from "./components/ui/Buttons";
+import Input from "./components/ui/input";
 
-interface IProps {
+// interface IProps {
   
-}
-function App ({}:IProps) {
+// }
+function App () {
   // ** State 
   const [isOpen, setIsOpen] = useState(false)
   // ** Renders 
@@ -20,6 +21,12 @@ function App ({}:IProps) {
 
   // ** Renders 
   const renderProductlist = productList.map(pro => <ProductCard key={pro.id} product={pro} description={pro}/>)
+  const renderFormInputList = formInputsList.map(input => (
+    <div className="flex flex-col text-xl	 mb-4" >
+      <label className="lock uppercase tracking-wide mb-2 text-sm	font-bold text-cyan-950"  htmlFor={input.id}>{input.label}</label>
+      <Input type="text" id={input.id} name={input.name}/>
+    </div>
+  ))
   return (
     <main className="container">
       <Buttons className=" hover:bg-indigo-800 bg-indigo-700 "onClick={()=>{openModal()}} >Build Now</Buttons>
@@ -27,6 +34,11 @@ function App ({}:IProps) {
         {renderProductlist}
       </div>
       <Modal isOpen={isOpen} closeModal={closeModal} title="Add New Protuct">
+
+        <div>
+        {renderFormInputList}
+        </div>
+
         <div className="flex items-center space-x-3">
           <Buttons className=" hover:bg-indigo-800 bg-indigo-700 " >Submit</Buttons>
           <Buttons className=" hover:bg-gray-500 bg-gray-400 " >Cancel</Buttons>
