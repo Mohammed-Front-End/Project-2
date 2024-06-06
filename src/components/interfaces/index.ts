@@ -3,7 +3,7 @@ export interface IProduct {
   title: string;
   description: string;
   imageURL: string;
-  price?: number;
+  price?: string;
   colors: string[];
   category: {
     name: string;
@@ -13,7 +13,10 @@ export interface IProduct {
 
 export interface IFormInout {
   id: string;
-  name: string;
+  name: 'title' | 'description' | 'imageURL' | 'price';
   label: string;
   type: string;
 }
+
+
+
