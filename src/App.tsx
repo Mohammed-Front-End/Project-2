@@ -12,7 +12,8 @@ import { IProduct } from "./components/interfaces";
 function App () {
   // ** State 
   const [product,setProduct] = useState<IProduct>({
-    title:"string",
+    id:"",
+    title:"",
     description:"",
     imageURL:"",
     price:"",
@@ -43,10 +44,11 @@ function App () {
       [name]:value
     })
   }
-  console.log(product)
   
   // ** Renders 
   const renderProductlist = productList.map(pro => <ProductCard key={pro.id} product={pro}/>)
+  console.log(renderProductlist);
+  
   const renderFormInputList = formInputsList.map(input => (
     <div className="flex flex-col text-xl	 mb-4" >
       <label className="lock uppercase tracking-wide mb-2 text-sm	font-bold text-cyan-950"  htmlFor={input.id}>{input.label}</label>
