@@ -1,3 +1,4 @@
+import CircleColor from "./CircleColor";
 import Imag from "./Images";
 import { IProduct } from "./interfaces";
 import Buttons from "./ui/Buttons";
@@ -17,7 +18,13 @@ interface IProps {
  * @returns {JSX.Element} The rendered ProductCard component.
  */
 function ProductCard ({product}:IProps) {
-  const {title,description,imageURL,price,category} = product;
+  const {title,description,imageURL,price,colors,category} = product;
+
+  // Hendler
+  const renderProductColors = colors.map(event => (
+    <CircleColor key={event} color={event}/>
+  ))
+
   return (
     <div className="max-w-sm md:max-w-lg mx-auto md:mx-0 border border-solid border-blue-200 rounded-md p-2 flex flex-col justify-between">
       <Imag imgURL={imageURL} alt={"Product name"} className="rounded-md h-52 w-full lg:object-center" />
@@ -25,12 +32,8 @@ function ProductCard ({product}:IProps) {
       <h3 className="my-6 ">{title}</h3>
       <p>{textSlicer(description)}</p>
       
-      <div className="flex items-center my-4 space-x-3">
-        <span className="w-5 h-5 bg-white rounded-full cursor-pointer"></span>
-        <span className="w-5 h-5 bg-cyan-600 rounded-full cursor-pointer"></span>
-        <span className="w-5 h-5 bg-emerald-600 rounded-full cursor-pointer"></span>
-        <span className="w-5 h-5 bg-red-600 rounded-full  cursor-pointer"></span>
-      </div>
+      <div className="flex items-center my-4 space-x-1">{renderProductColors}</div>
+
       
       <div className="flex items-center justify-between" >
         <span>{price}</span>

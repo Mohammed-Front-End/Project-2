@@ -23,7 +23,7 @@ export const productValidation = (product: { title: string,description: string,i
     price:"",
   }
 
-  const regex =/^(https?|ftp):\/\/[^\s/$.?#].[^\s]*\.(jpg|jpeg|gif|png|webp)$/i.test(product.imageURL);
+  const regex =/^(https?|ftp|http):\/\/[^."]+$/.test(product.imageURL);
   if (!product.title.trim() || product.title.length < 10 || product.title.length > 80) {
     errors.title = "Product title must be between 10 and 80 characters!"
   }
@@ -32,7 +32,7 @@ export const productValidation = (product: { title: string,description: string,i
     errors.description = "Product description must be between 10 and 900 characters!"
   }
 
-  if (!product.imageURL.trim() || !regex){
+  if (!product.imageURL.trim() || regex){
     errors.imageURL = "vald image URL is required"
   } 
 
