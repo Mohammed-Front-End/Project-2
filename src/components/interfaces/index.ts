@@ -1,7 +1,7 @@
 import { ProductName } from "../types";
 
 export interface IProduct {
-  id?: string | undefined | number;
+  id: string;
   title: string;
   description: string;
   imageURL: string;

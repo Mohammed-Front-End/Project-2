@@ -9,6 +9,8 @@ interface IProps {
   openEditModal: () => void,
   idx:number,
   setProductToEditIdx: (value:number)=>void,
+  openConfirmModal: () => void,
+
 }
 /**
  * A card component that displays product details including image, title, description, price, and actions.
@@ -21,7 +23,7 @@ interface IProps {
  * @param {number} props.product.price - The price of the product.
  * @returns {JSX.Element} The rendered ProductCard component.
  */
-function ProductCard ({product,setProductToEdit,openEditModal,idx,setProductToEditIdx}:IProps) {
+function ProductCard ({product,setProductToEdit,openEditModal,idx,setProductToEditIdx,openConfirmModal}:IProps) {
   const {title,description,imageURL,price,colors,category} = product;
   // Render
   const renderProductColors = colors.map(event => (
@@ -33,6 +35,11 @@ function ProductCard ({product,setProductToEdit,openEditModal,idx,setProductToEd
     setProductToEdit(product);
     openEditModal()
     setProductToEditIdx(idx)
+  }
+  
+  const onRemove = () =>{
+    setProductToEdit(product);
+    openConfirmModal();
   }
 
   return (
@@ -47,12 +54,15 @@ function ProductCard ({product,setProductToEdit,openEditModal,idx,setProductToEd
       
       <div className="flex items-center justify-between" >
         <span>{price}</span>
-        <Imag imgURL={category.imageURL} alt={category.name} className="w-10 h-10 rounded-full object-center" />
+        <div className="flex items-center gap-3">
+          <span>{category.name}</span>
+          <Imag imgURL={category.imageURL} alt={category.name} className="w-10 h-10 rounded-full object-center" />
+        </div>
       </div>
       
       <div className="flex items-center justify-between space-x-3  my-5">
         <Buttons onClick={onEdit}  className=" hover:bg-indigo-800 bg-indigo-700 " width="flex-1">EDIT</Buttons>
-        <Buttons onClick={()=> {console.log("redd")}} className=" hover:bg-red-800 bg-red-700 "width="flex-1">DELETE</Buttons>
+        <Buttons onClick={onRemove} className=" hover:bg-red-800 bg-red-700 "width="flex-1">DELETE</Buttons>
       </div>
       
     </div> 

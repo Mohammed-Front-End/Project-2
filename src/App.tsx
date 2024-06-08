@@ -36,7 +36,8 @@ function App() {
   const [productToEdit, setProductToEdit] =
     useState<IProduct>(defaultProductObj); 
   const [productToEditIdx, setProductToEditIdx] = useState<number>(0);
-  
+  const [productToDelete, setProductToDelete] = useState<string | null>(null); 
+
 
   const [errors, setErrors] = useState({
     title: "",
@@ -46,6 +47,7 @@ function App() {
   });
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenEditModal, setIsOpenEditModal] = useState(false);
+  const [isOpenConfirmModal,setIsOpenConfirmModal] = useState(false);
 
   const [tempColors, setTempColors] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState(categories[3]);
@@ -57,13 +59,22 @@ function App() {
   function openModal() {
     setIsOpen(true);
   }
-
   // Is Open Edit Modal
   function closeEditModal() {
     setIsOpenEditModal(false);
   }
   function openEditModal() {
     setIsOpenEditModal(true);
+  }
+
+  // Is Open Confirm Modal   
+  function closeConfirmModal(){
+    setIsOpenConfirmModal(false)
+    setProductToDelete(null); 
+  }
+  function openConfirmModal(id: string){
+    setIsOpenConfirmModal(true)
+    setProductToDelete(id);
   }
 
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -77,7 +88,6 @@ function App() {
       [name]: "",
     });
   };
-
   const onChangeEditHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
     setProductToEdit({
@@ -93,7 +103,18 @@ function App() {
   function onCancle() {
     setProduct(defaultProductObj);
     closeModal();
+    setProductToEdit(defaultProductObj);
+    closeEditModal()
   }
+  
+  function removeProductHandler() {
+    if (productToDelete){
+      const filtered = products.filter(product => product.id !== productToDelete)
+      setProducts(filtered);
+      closeConfirmModal()
+    }
+  }
+
   function submitHandler(event: FormEvent<HTMLFormElement>): void {
     event.preventDefault();
     const { title, description, imageURL, price } = product;
@@ -152,7 +173,7 @@ function App() {
     closeEditModal();
   }
 
-  // ** Renders
+  // ** Handler
   const renderProductlist = products.map((product,idx) => (
     <ProductCard
       key={product.id}
@@ -161,6 +182,7 @@ function App() {
       openEditModal={openEditModal}
       idx={idx}
       setProductToEditIdx={setProductToEditIdx}
+      openConfirmModal={() => openConfirmModal(product.id)}
     />
   ));
 
@@ -226,6 +248,10 @@ function App() {
       </div>
     );
   }
+
+
+
+
   return (
     <main className="container">
       {/*Start ADD Product Modal */}
@@ -315,14 +341,34 @@ function App() {
             </Buttons>
             <Buttons
               className=" hover:bg-gray-500 bg-gray-400 "
-              onClick={onCancle}
-            >
+              onClick={onCancle}>
               Cancel
             </Buttons>
           </div>
         </form>
       </Modal>
       {/* End Edit Product Modal */}
+
+      
+
+      {/* Start Delete Product Confirm Modal */}
+      <Modal 
+        isOpen={isOpenConfirmModal}
+        closeModal={closeConfirmModal}
+        title="Are you sure you want to remove this product from your store?"
+        description=" Deleting this product will remove it permanently from your inventory. Any associated data, sales history, and other related information will also be deleted. Please make sure this is the intended action."
+        >
+        <div className="flex items-center space-x-3">
+          <Buttons className="bg-[#c2344d] hover:bg-red-800" onClick={removeProductHandler}>
+            Yes, remove
+          </Buttons>
+          <Buttons className="bg-[#a7a7a9] hover:bg-gray-600 text-white" onClick={closeConfirmModal}>
+            Cancel
+          </Buttons>
+        </div>
+      </Modal>
+
+      {/* End Delete Product Confirm Modal */}
     </main>
   );
 }
