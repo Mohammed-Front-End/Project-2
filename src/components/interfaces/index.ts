@@ -1,3 +1,5 @@
+import { ProductName } from "../types";
+
 export interface IProduct {
   id?: string | undefined | number;
   title: string;
@@ -13,10 +15,14 @@ export interface IProduct {
 
 export interface IFormInout {
   id: string;
-  name: 'title' | 'description' | 'imageURL' | 'price';
+  name: ProductName;
   label: string;
   type: string;
 }
 
 
-
+export interface ICategory {
+  id:string,
+  name: string,
+  imageURL:string
+}

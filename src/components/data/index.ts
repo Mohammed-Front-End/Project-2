@@ -1,5 +1,7 @@
-import { IFormInout, IProduct } from "../interfaces";
+import { ICategory, IFormInout, IProduct } from "../interfaces";
 import {v4 as uuidv4} from 'uuid';
+
+
 export const productList: IProduct[]= [
   {
       "id": uuidv4(),
@@ -210,4 +212,32 @@ export const colors:string[] = [
   "#FFD700",
   "#4B0082",
   "#FFAA00",
+]
+
+export const categories:ICategory[] = [
+  {
+    id: uuidv4(),
+    name: 'Electronics',
+    imageURL:
+      'https://fakestoreapi.com/img/81Zt42ioCgL._AC_SX679_.jpg',
+  },
+  {
+    id: uuidv4(),
+    name: 'Jewelery',
+    imageURL:
+      'https://fakestoreapi.com/img/71YAIFU48IL._AC_UL640_QL65_ML3_.jpg',
+  },
+  {
+    id: uuidv4(),
+    name: "Men's Clothing",
+    imageURL:
+      'https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg',
+  },
+  {
+    id: uuidv4(),
+    name: 'Nike',
+    imageURL:
+      'https://i5.walmartimages.com/seo/Nike-Women-s-Air-Max-Excee-Running-Shoes-White-Black-Pure-Platinum-8-US_8e74a4a3-f031-416b-bcdf-076ce79098ce_1.22284bc96d1de915cd33db7802ecf9de.jpeg',
+  },
+
 ]
